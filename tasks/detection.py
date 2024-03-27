@@ -1,12 +1,14 @@
 from ultralytics import YOLO
 import supervision as sv
-import numpy as np
 import cv2
+import os
 
+system_directory = os.getcwd()
+model_path = f"{system_directory}/models/yolov9c.pt"
 
 ellipse_annotator = sv.EllipseAnnotator()
 triangle_annotator = sv.TriangleAnnotator()
-model = YOLO("yolov9c.pt")
+model = YOLO(model_path)
 model.set_classes = (["player","referee", "ball"])
 
 
@@ -14,18 +16,22 @@ class DetectAndAnnotate:
     def __init__(self, input_file_path, output_file_path):
         self.input_file_path = input_file_path
         self.output_file_path = output_file_path
+        self.cv_width = cv2.CAP_PROP_FRAME_WIDTH
+        self.cv_height = cv2.CAP_PROP_FRAME_HEIGHT
+        self.cv_fps = cv2.CAP_PROP_FPS
+
 
     def detect_and_anotate(self):
-        input = cv2.Videoinput(self.input_file_path)
-        width, height, fps = (int(input.get(x)) for x in (cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT, cv2.CAP_PROP_FPS))
-        output = cv2.VideoWriter(self.output_file_path, cv2.VideoWriter_fourcc(*"mp4v"), fps, (width, height))
+        input = cv2.VideoCapture(self.input_file_path)
+        width, height, fps = (int(input.get(x)) for x in (self.cv_width, self.cv_height, self.cv_fps))
+        output = cv2.VideoWriter(self.output_file_path, cv2.VideoWriter.fourcc(*"mp4v"), fps, (width, height))
 
         while input.isOpened():
             options, frame = input.read()
 
             if not options:
                 break
-            cv2.Video
+            
             results = model.predict(frame)
             detections = sv.Detections.from_ultralytics(results[0])
 
@@ -49,4 +55,4 @@ class DetectAndAnnotate:
 
 
 
-    
+   

@@ -1,11 +1,15 @@
 from ultralytics import YOLO
 import supervision as sv
 import numpy as np
+import os
+
+system_directory = os.getcwd()
+model_path = f"{system_directory}/models/yolov9c.pt"
 
 
 ellipse_annotator = sv.EllipseAnnotator()
 tracker = sv.ByteTrack()
-model = YOLO("yolov9c.pt")
+model = YOLO(model_path)
 model.set_classes = (["player","referee", "ball"])
 
 class TrackAndAnnotate:

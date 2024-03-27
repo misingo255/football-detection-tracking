@@ -4,7 +4,7 @@ from tasks.tracking import TrackAndAnnotate
 
 system_directory = os.getcwd()
 input_file_path = f"{system_directory}/media/input.mp4"
-output_file_path = f"{system_directory}/media/input.mp4"
+output_file_path = f"{system_directory}/media/output.mp4"
 
 
 def run():
