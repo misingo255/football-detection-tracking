@@ -3,8 +3,8 @@ from tasks.detection import DetectAndAnnotate
 from tasks.tracking import TrackAndAnnotate
 
 system_directory = os.getcwd()
-input_file_path = f"{system_directory}/media/input.mp4"
-output_file_path = f"{system_directory}/media/output.mp4"
+input_file_path = f"{system_directory}/media/input_01.mp4"
+output_file_path = f"{system_directory}/media/output_01.mp4"
 
 
 def run():
@@ -13,5 +13,5 @@ def run():
 
 
 
-if __name__ == "main":
-    run()
+
+run()
